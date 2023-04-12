@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:library_system/home/home_page.dart';
+import 'package:library_system/di/provider_setup.dart';
+import 'package:library_system/pages/home/home_page.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: globalProviders,
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
