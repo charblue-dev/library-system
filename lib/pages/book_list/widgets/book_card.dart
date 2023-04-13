@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:library_system/pages/book_list/models/book.dart';
+import 'package:library_system/pages/book_list/models/book_card_model.dart';
 import 'package:library_system/styles/typo.dart';
 
 class BookCard extends StatelessWidget {
-  final Book book;
+  final BookCardModel model;
 
-  const BookCard({super.key, required this.book});
+  const BookCard({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {
+    final book = model.book;
     var url =
-        'https://media.cnn.com/api/v1/images/stellar/prod/221116115144-james-webb-space-telescope-hourglass-star-formation-crop.jpg?c=original';
+        'https://content.api.news/v3/images/bin/8791f511b22d3b0abb8b52c575bff083?width=2048';
     return Card(
       color: Colors.white,
       shadowColor: Colors.black38,
@@ -20,7 +21,7 @@ class BookCard extends StatelessWidget {
       ),
       child: Column(children: [
         Flexible(
-          flex: 2,
+          flex: 5,
           child: Container(
             decoration: BoxDecoration(
               image: DecorationImage(
@@ -32,7 +33,7 @@ class BookCard extends StatelessWidget {
           ),
         ),
         Flexible(
-            flex: 1,
+            flex: 3,
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
               alignment: Alignment.topLeft,
@@ -41,7 +42,7 @@ class BookCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text(
-                      book.title,
+                      '${book.id}. ${book.title}',
                       style: TypoType.subBold.getStyle(),
                     ),
                     Text(
@@ -51,6 +52,11 @@ class BookCard extends StatelessWidget {
                     ),
                     Text(
                       '출판사 | ${book.publisher}',
+                      style: TypoType.bodyLight.getStyle(color: Colors.grey),
+                      maxLines: 1,
+                    ),
+                    Text(
+                      '상태 | ${model.usable ? '대출가능' : '대출불가'}',
                       style: TypoType.bodyLight.getStyle(color: Colors.grey),
                       maxLines: 1,
                     ),
