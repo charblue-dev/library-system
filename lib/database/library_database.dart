@@ -37,8 +37,12 @@ class LibraryDatabase extends _$LibraryDatabase {
     return (select(books)..where((t) => t.title.like('%$keyword%'))).get();
   }
 
-  Future<void> record(RecordsCompanion record) {
+  Future<void> insertRecord(RecordsCompanion record) {
     return into(records).insert(record);
+  }
+
+  Future<void> deleteRecord(int bookId) {
+    return (delete(records)..where((tbl) => tbl.bookId.equals(bookId))).go();
   }
 }
 

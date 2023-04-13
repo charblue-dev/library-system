@@ -80,7 +80,7 @@ class _DefaultWidget extends StatelessWidget {
           ElevatedButton(
               onPressed: () => {cubit.deleteBook(int.parse(id.text))},
               child: Text(
-                '추가',
+                '삭제',
                 style: TypoType.bodyLight.getStyle(),
               )),
           const SizedBox(height: 50),

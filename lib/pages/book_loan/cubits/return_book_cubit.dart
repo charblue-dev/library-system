@@ -5,38 +5,37 @@ import 'package:library_system/pages/book_list/widgets/input_field.dart';
 import 'package:library_system/styles/typo.dart';
 
 final _bookId = TextEditingController();
-final _memberName = TextEditingController();
 
-class LoanBookCubit extends Cubit<LoanBookState> {
+class ReturnBookCubit extends Cubit<ReturnBookState> {
   final LibraryDatabase db;
-  LoanBookCubit(super.initialState, this.db);
+  ReturnBookCubit(super.initialState, this.db);
 
-  insertRecord(RecordsCompanion record) async {
-    emit(BookRecording());
-    await db.insertRecord(record);
-    emit(LoanBookFinish());
+  deleteRecord(int bookId) async {
+    emit(BookReturning());
+    await db.deleteRecord(bookId);
+    emit(ReturnBookFinish());
   }
 }
 
-abstract class LoanBookState {
-  Widget widget(LoanBookCubit cubit);
+abstract class ReturnBookState {
+  Widget widget(ReturnBookCubit cubit);
   void callback();
 }
 
-class LoanBookInit extends LoanBookState {
+class ReturnBookInit extends ReturnBookState {
   @override
   void callback() {}
 
   @override
-  Widget widget(LoanBookCubit cubit) => _InitialWidget(cubit);
+  Widget widget(ReturnBookCubit cubit) => _InitialWidget(cubit);
 }
 
-class BookRecording extends LoanBookState {
+class BookReturning extends ReturnBookState {
   @override
   void callback() {}
 
   @override
-  Widget widget(LoanBookCubit cubit) {
+  Widget widget(ReturnBookCubit cubit) {
     return Stack(
       children: [
         _InitialWidget(cubit),
@@ -47,21 +46,20 @@ class BookRecording extends LoanBookState {
   }
 }
 
-class LoanBookFinish extends LoanBookState {
+class ReturnBookFinish extends ReturnBookState {
   @override
   void callback() {
     _bookId.clear();
-    _memberName.clear();
   }
 
   @override
-  Widget widget(LoanBookCubit cubit) {
-    return Center(child: Text('도서대출완료', style: TypoType.bodyBold.getStyle()));
+  Widget widget(ReturnBookCubit cubit) {
+    return Center(child: Text('도서반납완료', style: TypoType.bodyBold.getStyle()));
   }
 }
 
 class _InitialWidget extends StatelessWidget {
-  final LoanBookCubit cubit;
+  final ReturnBookCubit cubit;
   const _InitialWidget(this.cubit);
 
   @override
@@ -72,15 +70,11 @@ class _InitialWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           InputField(title: '도서번호', controller: _bookId),
-          const SizedBox(height: 10),
-          InputField(title: '대출자명', controller: _memberName),
           const SizedBox(height: 50),
           ElevatedButton(
-              onPressed: () => cubit.insertRecord(RecordsCompanion.insert(
-                  memberName: _memberName.text,
-                  bookId: int.parse(_bookId.text))),
+              onPressed: () => cubit.deleteRecord(int.parse(_bookId.text)),
               child: Text(
-                '추가',
+                '반납',
                 style: TypoType.bodyLight.getStyle(),
               )),
           const SizedBox(height: 50),
