@@ -65,9 +65,7 @@ class SearchBookFinish extends SearchBookState {
   SearchBookFinish(this.books, this.records);
 
   @override
-  void callback() {
-    _searchKeyword.clear();
-  }
+  void callback() {}
 
   @override
   Widget widget(SearchBookCubit cubit) {

@@ -44,6 +44,10 @@ class LibraryDatabase extends _$LibraryDatabase {
   Future<void> deleteRecord(int bookId) {
     return (delete(records)..where((tbl) => tbl.bookId.equals(bookId))).go();
   }
+
+  Future<int> countBooks() async {
+    return (await select(books).get()).length;
+  }
 }
 
 List<BooksCompanion> get _sampleBookList {
@@ -94,9 +98,9 @@ List<BooksCompanion> get _sampleBookList {
       publisher: '북로드',
     ),
     BooksCompanion.insert(
-      title: '베로니카, 죽기로 결심하다',
-      author: '파울로 코엘료',
-      publisher: '문학동네',
+      title: '별',
+      author: '알퐁스 도데',
+      publisher: '인디북',
     ),
     BooksCompanion.insert(
       title: '죽음이란 무엇인가',
@@ -109,9 +113,9 @@ List<BooksCompanion> get _sampleBookList {
       publisher: '아작',
     ),
     BooksCompanion.insert(
-      title: '어서오세요, 휴남동서점입니다',
-      author: '황보름',
-      publisher: '클레이하우스',
+      title: '지구 끝의 온실',
+      author: '김초엽',
+      publisher: '자이언트북스',
     ),
     BooksCompanion.insert(
       title: '아홉병의 완벽한 타인들',
