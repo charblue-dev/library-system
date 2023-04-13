@@ -36,6 +36,10 @@ class LibraryDatabase extends _$LibraryDatabase {
   Future<List<Book>> search(String keyword) {
     return (select(books)..where((t) => t.title.like('%$keyword%'))).get();
   }
+
+  Future<void> record(RecordsCompanion record) {
+    return into(records).insert(record);
+  }
 }
 
 List<BooksCompanion> get _sampleBookList {

@@ -1,4 +1,3 @@
-import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:library_system/enums/navigation_type.dart';
@@ -20,13 +19,6 @@ class HomePage extends StatelessWidget {
       body: BlocBuilder<NavigationCubit, NavigationType>(
         bloc: vm.navigation,
         builder: (context, state) => state.widget,
-      ),
-      floatingActionButton: AnimSearchBar(
-        rtl: true,
-        onSubmitted: (String) {},
-        onSuffixTap: null,
-        textController: TextEditingController(),
-        width: 500,
       ),
     );
   }
