@@ -4,6 +4,7 @@ import 'package:library_system/models/menu.dart';
 import 'package:library_system/pages/book_list/cubits/delete_book_cubit.dart';
 import 'package:library_system/pages/book_list/cubits/get_book_list_cubit.dart';
 import 'package:library_system/pages/book_list/cubits/insert_book_cubit.dart';
+import 'package:library_system/pages/book_list/cubits/search_book_cubit.dart';
 import 'package:library_system/pages/home/home_view_model.dart';
 import 'package:library_system/widgets/menu_template.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +17,7 @@ class BookListPage extends StatelessWidget {
     return MenuTemplate(
       menus: [
         Menu('도서목록', const _BookListSection()),
-        Menu('도서검색', const _BookListSection()),
+        Menu('도서검색', const _BookSearchSection()),
         Menu('도서추가', const _InsertBookSection()),
         Menu('도서삭제', const _DeleteBookSection()),
       ],
@@ -25,9 +26,7 @@ class BookListPage extends StatelessWidget {
 }
 
 class _DeleteBookSection extends StatelessWidget {
-  const _DeleteBookSection({
-    super.key,
-  });
+  const _DeleteBookSection({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -44,9 +43,7 @@ class _DeleteBookSection extends StatelessWidget {
 }
 
 class _InsertBookSection extends StatelessWidget {
-  const _InsertBookSection({
-    super.key,
-  });
+  const _InsertBookSection({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -68,9 +65,7 @@ class _InsertBookSection extends StatelessWidget {
 }
 
 class _BookListSection extends StatelessWidget {
-  const _BookListSection({
-    super.key,
-  });
+  const _BookListSection({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +76,22 @@ class _BookListSection extends StatelessWidget {
     return BlocConsumer<GetBookListCubit, GetBookListState>(
       bloc: cubit,
       builder: (context, state) => state.widget,
+      listener: (context, state) => state.callback(),
+    );
+  }
+}
+
+class _BookSearchSection extends StatelessWidget {
+  const _BookSearchSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final vm = Provider.of<HomeViewModel>(context);
+    final cubit = SearchBookCubit(SearchBookInit(), vm.db);
+
+    return BlocConsumer<SearchBookCubit, SearchBookState>(
+      bloc: cubit,
+      builder: (context, state) => state.widget(cubit),
       listener: (context, state) => state.callback(),
     );
   }

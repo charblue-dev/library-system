@@ -32,6 +32,10 @@ class LibraryDatabase extends _$LibraryDatabase {
   Future<void> deleteBook(int id) {
     return (delete(books)..where((tbl) => tbl.id.equals(id))).go();
   }
+
+  Future<List<Book>> search(String keyword) {
+    return (select(books)..where((t) => t.title.like('%$keyword%'))).get();
+  }
 }
 
 List<BooksCompanion> get _sampleBookList {
